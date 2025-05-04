@@ -17,6 +17,7 @@ public struct SimpleToastOptions {
     /// nil is default, which is equivalent to no hiding
     public var hideAfter: TimeInterval?
 
+    /// The Backdrop Color
     public var backdrop: Color?
 
     /// Custom animation type
