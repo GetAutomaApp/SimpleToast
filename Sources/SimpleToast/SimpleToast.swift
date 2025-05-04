@@ -6,14 +6,14 @@
 //  Licensed under Apache License v2.0
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
-struct SimpleToast<SimpleToastContent: View>: ViewModifier {
-    @Binding var showToast: Bool
+internal struct SimpleToast<SimpleToastContent: View>: ViewModifier {
+    @Binding public var showToast: Bool
 
-    let options: SimpleToastOptions
-    let onDismiss: (() -> Void)?
+    public let options: SimpleToastOptions
+    public let onDismiss: (() -> Void)?
 
     @State private var offset: CGSize = .zero
     @State private var isInit = false
@@ -22,35 +22,31 @@ struct SimpleToast<SimpleToastContent: View>: ViewModifier {
 
     private let toastInnerContent: SimpleToastContent
 
-    @ViewBuilder
-    private var toastRenderContent: some View {
+    @ViewBuilder private var toastRenderContent: some View {
         if showToast {
             Group {
                 switch options.modifierType {
                 case .slide:
                     toastInnerContent
                         .modifier(SimpleToastSlide(showToast: $showToast, options: options))
-                        .modifier(SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss))
-
+                        .modifier(
+                            SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss)
+                        )
                 case .scale:
                     toastInnerContent
                         .modifier(SimpleToastScale(showToast: $showToast, options: options))
-                        .modifier(SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss))
-
+                        .modifier(
+                            SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss)
+                        )
                 case .skew:
                     toastInnerContent
                         .modifier(SimpleToastSkew(showToast: $showToast, options: options))
-                        // .gesture(dragGesture)
-
-//                case .curtain:
-//                    toastInnerContent
-//                        .modifier(SimpleToastCurtain(showToast: $showToast, options: options))
-//                        .onTapGesture(perform: dismiss)
-
                 default:
                     toastInnerContent
                         .modifier(SimpleToastFade(showToast: $showToast, options: options))
-                        .modifier(SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss))
+                        .modifier(
+                            SimpleToastDragGestureModifier(offset: $offset, options: options, onCompletion: dismiss)
+                        )
                 }
             }
             .onTapGesture(perform: dismissOnTap)
@@ -61,7 +57,7 @@ struct SimpleToast<SimpleToastContent: View>: ViewModifier {
         }
     }
 
-    init(
+    public init(
         showToast: Binding<Bool>,
         options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
@@ -73,7 +69,7 @@ struct SimpleToast<SimpleToastContent: View>: ViewModifier {
         self.toastInnerContent = content()
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         // Main view content
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -158,9 +154,11 @@ public extension View {
     ///   - content: Inner content for the toast
     /// - Returns: The toast view
     func simpleToast<SimpleToastContent: View>(
-        isPresented: Binding<Bool>, options: SimpleToastOptions,
+        isPresented: Binding<Bool>,
+        options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> SimpleToastContent) -> some View {
+        @ViewBuilder content: @escaping () -> SimpleToastContent
+    ) -> some View {
         self.modifier(
             SimpleToast(showToast: isPresented, options: options, onDismiss: onDismiss, content: content)
         )
@@ -177,7 +175,8 @@ public extension View {
     ///   - content: Inner content for the toast
     /// - Returns: The toast view
     func simpleToast<SimpleToastContent: View, Item: Identifiable>(
-        item: Binding<Item?>?, options: SimpleToastOptions,
+        item: Binding<Item?>?,
+        options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SimpleToastContent
     ) -> some View {
@@ -209,9 +208,11 @@ public extension View {
     /// - Returns: The toast view
     @available(*, deprecated, renamed: "simpleToast(isPresented:options:onDismiss:content:)")
     func simpleToast<SimpleToastContent: View>(
-        isShowing: Binding<Bool>, options: SimpleToastOptions,
+        isShowing: Binding<Bool>,
+        options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> SimpleToastContent) -> some View {
+        @ViewBuilder content: @escaping () -> SimpleToastContent
+    ) -> some View {
         self.modifier(
             SimpleToast(showToast: isShowing, options: options, onDismiss: onDismiss, content: content)
         )

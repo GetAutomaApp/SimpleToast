@@ -1,6 +1,10 @@
-import XCTest
 @testable import SimpleToast
+import XCTest
 
-final class SimpleToastTests: XCTestCase {
-    static var allTests: [(String, Any)] = []
+internal final class SimpleToastTests: XCTestCase {
+    public static var allTests: [(String, Any)] = []
+
+    deinit {
+        // deinit here
+    }
 }

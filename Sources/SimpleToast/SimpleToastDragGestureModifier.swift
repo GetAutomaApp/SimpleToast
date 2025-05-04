@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct SimpleToastDragGestureModifier: ViewModifier {
-    @Binding var offset: CGSize
-    let options: SimpleToastOptions
-    var onCompletion: () -> Void
+internal struct SimpleToastDragGestureModifier: ViewModifier {
+    @Binding public var offset: CGSize
+    public let options: SimpleToastOptions
+    public var onCompletion: () -> Void
 
     @State private var delta: CGFloat = 0
 
@@ -70,7 +70,7 @@ struct SimpleToastDragGestureModifier: ViewModifier {
     }
     #endif
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             #if !os(tvOS)
             .gesture(dragGesture)

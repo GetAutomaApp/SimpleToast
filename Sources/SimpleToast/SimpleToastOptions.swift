@@ -28,7 +28,14 @@ public struct SimpleToastOptions {
 
     /// All available modifier types
     public enum ModifierType {
-        case fade, slide, scale, skew
+        /// fades
+        case fade
+        /// slides
+        case slide
+        /// scales
+        case scale
+        /// skews
+        case skew
     }
 
     /// The type of SimpleToast modifier to apply
@@ -47,6 +54,16 @@ public struct SimpleToastOptions {
     @available(swift, deprecated: 0.5.1, renamed: "backdrop")
     public var backdropColor: Color = Color.white
 
+    /// Creates a new instance of `SimpleToastOptions`.
+    ///
+    /// - Parameters:
+    ///   - alignment: The alignment of the toast (e.g., `.top` or `.bottom`).
+    ///   - hideAfter: The time interval after which the toast will be hidden. Pass `nil` for no auto-hide.
+    ///   - backdrop: The color of the backdrop. Pass `nil` for no backdrop.
+    ///   - animation: The animation type for the toast. Defaults to `.linear`.
+    ///   - modifierType: The type of modifier to apply to the toast (e.g., `.fade`, `.slide`).
+    ///   - dismissOnTap: A flag indicating whether the toast should be dismissed when tapped. Defaults to `true`.
+    ///   - disableDragGesture: A flag indicating whether drag gestures should be disabled. Defaults to `false`.
     public init(
         alignment: Alignment = .top,
         hideAfter: TimeInterval? = nil,
@@ -68,7 +85,22 @@ public struct SimpleToastOptions {
 
 // MARK: - Deprecated
 extension SimpleToastOptions {
-    @available(*, deprecated, renamed: "init(alignment:hideAfter:backdrop:animation:modifierType:dismissOnTap:disableDragGesture:)")
+    /// Creates a new instance of `SimpleToastOptions` (deprecated).
+    ///
+    /// - Parameters:
+    ///   - alignment: The alignment of the toast (e.g., `.top` or `.bottom`).
+    ///   - hideAfter: The time interval after which the toast will be hidden. Pass `nil` for no auto-hide.
+    ///   - showBackdrop: A flag indicating whether a backdrop should be shown. Deprecated in favor of `backdrop`.
+    ///   - backdropColor: The color of the backdrop. Deprecated in favor of `backdrop`.
+    ///   - animation: The animation type for the toast. Pass `nil` for no animation.
+    ///   - modifierType: The type of modifier to apply to the toast (e.g., `.fade`, `.slide`).
+    ///   - dismissOnTap: A flag indicating whether the toast should be dismissed when tapped. Defaults to `true`.
+    ///   - disableDragGesture: A flag indicating whether drag gestures should be disabled. Defaults to `false`.
+    @available(
+        *,
+        deprecated,
+        renamed: "init(alignment:hideAfter:backdrop:animation:modifierType:dismissOnTap:disableDragGesture:)"
+    )
     public init(
         alignment: Alignment = .top,
         hideAfter: TimeInterval? = nil,
