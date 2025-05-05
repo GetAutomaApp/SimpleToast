@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "SimpleToast",
     platforms: [
-        .iOS(.v13), .macOS(.v10_15), .tvOS(.v16)
+        .iOS(.v13), .macOS(.v10_15), .tvOS(.v16),
     ],
     products: [
         .library(

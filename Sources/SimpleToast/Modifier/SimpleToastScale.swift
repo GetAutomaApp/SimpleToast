@@ -1,10 +1,10 @@
+// SimpleToastScale.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
 //
-//  SimpleToastScale.swift
-//
-//  This file is part of the SimpleToast Swift library: https://github.com/sanzaru/SimpleToast
-//  Created by Martin Albrecht on 04.10.21.
-//  Licensed under Apache License v2.0
-//
+// This package is freely distributable under the APache 2.0 License.
+// This Package is a modified fork of https://github.com/sanzaru/SimpleToast
 
 import SwiftUI
 
