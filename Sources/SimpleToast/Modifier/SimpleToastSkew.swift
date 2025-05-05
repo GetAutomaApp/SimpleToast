@@ -1,6 +1,6 @@
 //
 //  SimpleToastSkew.swift
-//  
+//
 //  This file is part of the SimpleToast Swift library: https://github.com/sanzaru/SimpleToast
 //  Created by Martin Albrecht on 04.10.21.
 //  Licensed under Apache License v2.0
@@ -23,7 +23,8 @@ private struct RotationModifier: ViewModifier {
 }
 
 extension AnyTransition {
-    static var skew: AnyTransition {
+    /// skew transition
+    public static var skew: AnyTransition {
         .modifier(
             active: RotationModifier(amount: 90),
             identity: RotationModifier(amount: 0)
@@ -32,11 +33,11 @@ extension AnyTransition {
 }
 
 /// Modifier for the skewing animation
-struct SimpleToastSkew: SimpleToastModifier {
-    @Binding var showToast: Bool
-    let options: SimpleToastOptions?
+internal struct SimpleToastSkew: SimpleToastModifier {
+    @Binding public var showToast: Bool
+    public let options: SimpleToastOptions?
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .transition(
                 AnyTransition.skew

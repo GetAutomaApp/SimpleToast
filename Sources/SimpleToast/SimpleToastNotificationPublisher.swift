@@ -9,7 +9,9 @@
 
 import SwiftUI
 
+/// Publishes a toast notification using NotificationCenter.
 public struct SimpleToastNotificationPublisher {
+    /// Publishes a toast notification using NotificationCenter.
     public static func publish<ToastNotification: Identifiable>(notification: ToastNotification) {
         NotificationCenter.default.post(name: .toastNotification, object: notification)
     }
@@ -20,11 +22,13 @@ private extension Notification.Name {
     static let toastNotification = Notification.Name("SimpleToastNotification")
 }
 
-public extension View {
+extension View {
     /// Handle NotificationCenter events for SimpleToast
     /// - Parameter action: The action to perform when a notification is received
     /// - Returns: The view the function is attached to
-    func onToastNotification<ToastNotification: Identifiable>(perform action: @escaping (ToastNotification?) -> Void) -> some View {
+    public func onToastNotification<ToastNotification: Identifiable>(
+        perform action: @escaping (ToastNotification?) -> Void
+    ) -> some View {
         onReceive(NotificationCenter.default.publisher(for: .toastNotification)) {
             action($0.object as? ToastNotification)
         }

@@ -9,9 +9,10 @@
 import SwiftUI
 
 /// Protocol defining the structure of a SimpleToast view modifier
-/// The basic building blocks are a boolean value determining whether to show the toast or not and an instance of a SimpleToastOptions object, which is optional.
+/// The basic building blocks are a boolean value determining whether to show
+///  the toast or not and an instance of a SimpleToastOptions object, which is optional.
 @MainActor
-protocol SimpleToastModifier: ViewModifier {
+internal protocol SimpleToastModifier: ViewModifier {
     var showToast: Bool { get set }
     var options: SimpleToastOptions? { get }
 }

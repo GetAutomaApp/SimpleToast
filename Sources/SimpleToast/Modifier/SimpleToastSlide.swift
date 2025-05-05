@@ -9,12 +9,12 @@
 import SwiftUI
 
 /// Modifier foe the slide animation
-struct SimpleToastSlide: SimpleToastModifier {
-    @Binding var showToast: Bool
-    let options: SimpleToastOptions?
+internal struct SimpleToastSlide: SimpleToastModifier {
+    @Binding public var showToast: Bool
+    public let options: SimpleToastOptions?
 
     private var transitionEdge: Edge {
-        if let pos = options?.alignment ?? nil {
+        if let pos = options?.alignment{
             switch pos {
             case .top, .topLeading, .topTrailing:
                 return .top
@@ -30,7 +30,7 @@ struct SimpleToastSlide: SimpleToastModifier {
         return .top
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         return content
             .transition(AnyTransition.move(edge: transitionEdge).combined(with: .opacity))
             .animation(options?.animation ?? .default)
