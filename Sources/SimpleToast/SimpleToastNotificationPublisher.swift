@@ -1,18 +1,17 @@
+// SimpleToastNotificationPublisher.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
 //
-//  SimpleToastNotificationPublisher.swift
-//  SimpleToast
-//
-//  This file is part of the SimpleToast Swift library: https://github.com/sanzaru/SimpleToast
-//  Created by Martin Albrecht on 25.09.24.
-//  Licensed under Apache License v2.0
-//
+// This package is freely distributable under the APache 2.0 License.
+// This Package is a modified fork of https://github.com/sanzaru/SimpleToast
 
 import SwiftUI
 
 /// Publishes a toast notification using NotificationCenter.
-public struct SimpleToastNotificationPublisher {
+public enum SimpleToastNotificationPublisher {
     /// Publishes a toast notification using NotificationCenter.
-    public static func publish<ToastNotification: Identifiable>(notification: ToastNotification) {
+    public static func publish(notification: some Identifiable) {
         NotificationCenter.default.post(name: .toastNotification, object: notification)
     }
 }
@@ -22,11 +21,11 @@ private extension Notification.Name {
     static let toastNotification = Notification.Name("SimpleToastNotification")
 }
 
-extension View {
+public extension View {
     /// Handle NotificationCenter events for SimpleToast
     /// - Parameter action: The action to perform when a notification is received
     /// - Returns: The view the function is attached to
-    public func onToastNotification<ToastNotification: Identifiable>(
+    func onToastNotification<ToastNotification: Identifiable>(
         perform action: @escaping (ToastNotification?) -> Void
     ) -> some View {
         onReceive(NotificationCenter.default.publisher(for: .toastNotification)) {

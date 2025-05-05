@@ -1,10 +1,10 @@
+// SimpleToastOptions.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
 //
-//  SimpleToastOptions.swift
-//
-//  This file is part of the SimpleToast Swift library: https://github.com/sanzaru/SimpleToast
-//  Created by Martin Albrecht on 24.04.21.
-//  Licensed under Apache License v2.0
-//
+// This package is freely distributable under the APache 2.0 License.
+// This Package is a modified fork of https://github.com/sanzaru/SimpleToast
 
 import SwiftUI
 
@@ -52,7 +52,7 @@ public struct SimpleToastOptions {
 
     /// Color of the backdrop. Will be ignoroed when no backdrop is shown
     @available(swift, deprecated: 0.5.1, renamed: "backdrop")
-    public var backdropColor: Color = Color.white
+    public var backdropColor: Color = .white
 
     /// Creates a new instance of `SimpleToastOptions`.
     ///
@@ -84,7 +84,8 @@ public struct SimpleToastOptions {
 }
 
 // MARK: - Deprecated
-extension SimpleToastOptions {
+
+public extension SimpleToastOptions {
     /// Creates a new instance of `SimpleToastOptions` (deprecated).
     ///
     /// - Parameters:
@@ -101,7 +102,7 @@ extension SimpleToastOptions {
         deprecated,
         renamed: "init(alignment:hideAfter:backdrop:animation:modifierType:dismissOnTap:disableDragGesture:)"
     )
-    public init(
+    init(
         alignment: Alignment = .top,
         hideAfter: TimeInterval? = nil,
         showBackdrop: Bool? = true,

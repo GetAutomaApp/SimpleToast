@@ -1,10 +1,10 @@
+// SimpleToast.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
 //
-//  SimpleToast.swift
-//
-//  This file is part of the SimpleToast Swift library: https://github.com/sanzaru/SimpleToast
-//  Created by Martin Albrecht on 12.07.20.
-//  Licensed under Apache License v2.0
-//
+// This package is freely distributable under the APache 2.0 License.
+// This Package is a modified fork of https://github.com/sanzaru/SimpleToast
 
 import Combine
 import SwiftUI
@@ -63,17 +63,16 @@ internal struct SimpleToast<SimpleToastContent: View>: ViewModifier {
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SimpleToastContent
     ) {
-        self._showToast = showToast
+        _showToast = showToast
         self.options = options
         self.onDismiss = onDismiss
-        self.toastInnerContent = content()
+        toastInnerContent = content()
     }
 
     public func body(content: Content) -> some View {
         // Main view content
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-
             // Backdrop
             .overlay(
                 Group { EmptyView() }
@@ -134,15 +133,17 @@ internal struct SimpleToast<SimpleToastContent: View>: ViewModifier {
             onDismiss?()
         }
     }
+
     /// Dismiss the toast Base on dismissOnTap
     private func dismissOnTap() {
         if options.dismissOnTap ?? true {
-            self.dismiss()
+            dismiss()
         }
     }
 }
 
 // MARK: - View extensions
+
 public extension View {
     /// Present the sheet based on the state of a given binding to a boolean.
     ///
@@ -153,13 +154,13 @@ public extension View {
     ///   - onDismiss: Closure called when the toast is dismissed
     ///   - content: Inner content for the toast
     /// - Returns: The toast view
-    func simpleToast<SimpleToastContent: View>(
+    func simpleToast(
         isPresented: Binding<Bool>,
         options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> SimpleToastContent
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
-        self.modifier(
+        modifier(
             SimpleToast(showToast: isPresented, options: options, onDismiss: onDismiss, content: content)
         )
     }
@@ -174,11 +175,11 @@ public extension View {
     ///   - onDismiss: Closure called when the toast is dismissed
     ///   - content: Inner content for the toast
     /// - Returns: The toast view
-    func simpleToast<SimpleToastContent: View, Item: Identifiable>(
-        item: Binding<Item?>?,
+    func simpleToast(
+        item: Binding<(some Identifiable)?>?,
         options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> SimpleToastContent
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         let bindingProxy = Binding<Bool>(
             get: { item?.wrappedValue != nil },
@@ -189,13 +190,14 @@ public extension View {
             }
         )
 
-        return self.modifier(
+        return modifier(
             SimpleToast(showToast: bindingProxy, options: options, onDismiss: onDismiss, content: content)
         )
     }
 }
 
 // MARK: - Deprecated
+
 public extension View {
     /// Present the sheet based on the state of a given binding to a boolean.
     ///
@@ -207,13 +209,13 @@ public extension View {
     ///   - content: Inner content for the toast
     /// - Returns: The toast view
     @available(*, deprecated, renamed: "simpleToast(isPresented:options:onDismiss:content:)")
-    func simpleToast<SimpleToastContent: View>(
+    func simpleToast(
         isShowing: Binding<Bool>,
         options: SimpleToastOptions,
         onDismiss: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> SimpleToastContent
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
-        self.modifier(
+        modifier(
             SimpleToast(showToast: isShowing, options: options, onDismiss: onDismiss, content: content)
         )
     }
